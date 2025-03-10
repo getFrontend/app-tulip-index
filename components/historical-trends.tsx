@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { HistoricalData } from "@/lib/types"
 import { useTranslation } from "@/lib/i18n/context"
-import { Chart, ChartContainer } from "@/components/ui/chart"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
 interface HistoricalTrendsProps {
@@ -37,41 +36,39 @@ export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
     }))
 
     // Format data for relative price chart (indexed to 2003 = 100)
-    const baseYear = data.find((d) => d.year === 2003)
+    const baseYear = data.find((d) => d.year === 2003)!
     const relativeData = data.map((year) => ({
       year: year.year,
-      tulip: (year.tulipPrice / baseYear!.tulipPrice) * 100,
-      coffee: (year.essentialGoods.coffee / baseYear!.essentialGoods.coffee) * 100,
-      groceryBag: (year.essentialGoods.groceryBag / baseYear!.essentialGoods.groceryBag) * 100,
-      lunch: (year.essentialGoods.lunch / baseYear!.essentialGoods.lunch) * 100,
-      busTicket: (year.essentialGoods.busTicket / baseYear!.essentialGoods.busTicket) * 100,
-      movieTicket: (year.essentialGoods.movieTicket / baseYear!.essentialGoods.movieTicket) * 100,
-      book: (year.essentialGoods.book / baseYear!.essentialGoods.book) * 100,
+      tulip: (year.tulipPrice / baseYear.tulipPrice) * 100,
+      coffee: (year.essentialGoods.coffee / baseYear.essentialGoods.coffee) * 100,
+      groceryBag: (year.essentialGoods.groceryBag / baseYear.essentialGoods.groceryBag) * 100,
+      lunch: (year.essentialGoods.lunch / baseYear.essentialGoods.lunch) * 100,
+      busTicket: (year.essentialGoods.busTicket / baseYear.essentialGoods.busTicket) * 100,
+      movieTicket: (year.essentialGoods.movieTicket / baseYear.essentialGoods.movieTicket) * 100,
+      book: (year.essentialGoods.book / baseYear.essentialGoods.book) * 100,
     }))
 
     // Format data for tulip purchasing power chart
     const purchasingPowerData = data.map((year) => ({
       year: year.year,
       coffee:
-        (baseYear!.tulipPrice / baseYear!.essentialGoods.coffee / (year.tulipPrice / year.essentialGoods.coffee)) * 100,
+        (baseYear.tulipPrice / baseYear.essentialGoods.coffee / (year.tulipPrice / year.essentialGoods.coffee)) * 100,
       groceryBag:
-        (baseYear!.tulipPrice /
-          baseYear!.essentialGoods.groceryBag /
+        (baseYear.tulipPrice /
+          baseYear.essentialGoods.groceryBag /
           (year.tulipPrice / year.essentialGoods.groceryBag)) *
         100,
       lunch:
-        (baseYear!.tulipPrice / baseYear!.essentialGoods.lunch / (year.tulipPrice / year.essentialGoods.lunch)) * 100,
+        (baseYear.tulipPrice / baseYear.essentialGoods.lunch / (year.tulipPrice / year.essentialGoods.lunch)) * 100,
       busTicket:
-        (baseYear!.tulipPrice /
-          baseYear!.essentialGoods.busTicket /
-          (year.tulipPrice / year.essentialGoods.busTicket)) *
+        (baseYear.tulipPrice / baseYear.essentialGoods.busTicket / (year.tulipPrice / year.essentialGoods.busTicket)) *
         100,
       movieTicket:
-        (baseYear!.tulipPrice /
-          baseYear!.essentialGoods.movieTicket /
+        (baseYear.tulipPrice /
+          baseYear.essentialGoods.movieTicket /
           (year.tulipPrice / year.essentialGoods.movieTicket)) *
         100,
-      book: (baseYear!.tulipPrice / baseYear!.essentialGoods.book / (year.tulipPrice / year.essentialGoods.book)) * 100,
+      book: (baseYear.tulipPrice / baseYear.essentialGoods.book / (year.tulipPrice / year.essentialGoods.book)) * 100,
     }))
 
     setChartData({ absoluteData, relativeData, purchasingPowerData })
@@ -95,7 +92,7 @@ export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
           <p className="font-medium">{`Year: ${label}`}</p>
           {payload.map((entry: any, index: number) => (
             <p key={`item-${index}`} style={{ color: entry.color }}>
-              {`${entry.name}: ${activeTab === "absolute" ? currencySymbol : ""}${entry.value.toFixed(2)}${activeTab !== "absolute" ? "" : ""}`}
+              {`${entry.name}: ${activeTab === "absolute" ? currencySymbol : ""}${entry.value.toFixed(2)}${activeTab !== "absolute" ? "%" : ""}`}
             </p>
           ))}
         </div>
@@ -120,139 +117,127 @@ export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
             </TabsList>
 
             <TabsContent value="absolute">
-              <div className="h-[400px]">
-                <ChartContainer>
-                  <Chart>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={chartData.absoluteData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Legend />
-                        <Line
-                          type="monotone"
-                          dataKey="tulip"
-                          stroke={chartColors.tulip}
-                          strokeWidth={3}
-                          dot={{ r: 1 }}
-                          activeDot={{ r: 5 }}
-                          name={t("site.title")}
-                        />
-                        <Line type="monotone" dataKey="coffee" stroke={chartColors.coffee} name={t("item.coffee")} />
-                        <Line
-                          type="monotone"
-                          dataKey="groceryBag"
-                          stroke={chartColors.groceryBag}
-                          name={t("item.groceryBag")}
-                        />
-                        <Line type="monotone" dataKey="lunch" stroke={chartColors.lunch} name={t("item.lunch")} />
-                        <Line
-                          type="monotone"
-                          dataKey="busTicket"
-                          stroke={chartColors.busTicket}
-                          name={t("item.busTicket")}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="movieTicket"
-                          stroke={chartColors.movieTicket}
-                          name={t("item.movieTicket")}
-                        />
-                        <Line type="monotone" dataKey="book" stroke={chartColors.book} name={t("item.book")} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </Chart>
-                </ChartContainer>
+              <div className="w-full h-[400px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData.absoluteData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="tulip"
+                      stroke={chartColors.tulip}
+                      strokeWidth={3}
+                      dot={{ r: 1 }}
+                      activeDot={{ r: 5 }}
+                      name={t("site.title")}
+                    />
+                    <Line type="monotone" dataKey="coffee" stroke={chartColors.coffee} name={t("item.coffee")} />
+                    <Line
+                      type="monotone"
+                      dataKey="groceryBag"
+                      stroke={chartColors.groceryBag}
+                      name={t("item.groceryBag")}
+                    />
+                    <Line type="monotone" dataKey="lunch" stroke={chartColors.lunch} name={t("item.lunch")} />
+                    <Line
+                      type="monotone"
+                      dataKey="busTicket"
+                      stroke={chartColors.busTicket}
+                      name={t("item.busTicket")}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="movieTicket"
+                      stroke={chartColors.movieTicket}
+                      name={t("item.movieTicket")}
+                    />
+                    <Line type="monotone" dataKey="book" stroke={chartColors.book} name={t("item.book")} />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
               <div className="text-sm text-muted-foreground mt-4 text-center">{t("trends.absoluteCaption")}</div>
             </TabsContent>
 
             <TabsContent value="relative">
-              <div className="h-[400px]">
-                <ChartContainer>
-                  <Chart>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={chartData.relativeData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Legend />
-                        <Line
-                          type="monotone"
-                          dataKey="tulip"
-                          stroke={chartColors.tulip}
-                          strokeWidth={3}
-                          dot={{ r: 1 }}
-                          activeDot={{ r: 5 }}
-                          name={t("site.title")}
-                        />
-                        <Line type="monotone" dataKey="coffee" stroke={chartColors.coffee} name={t("item.coffee")} />
-                        <Line
-                          type="monotone"
-                          dataKey="groceryBag"
-                          stroke={chartColors.groceryBag}
-                          name={t("item.groceryBag")}
-                        />
-                        <Line type="monotone" dataKey="lunch" stroke={chartColors.lunch} name={t("item.lunch")} />
-                        <Line
-                          type="monotone"
-                          dataKey="busTicket"
-                          stroke={chartColors.busTicket}
-                          name={t("item.busTicket")}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="movieTicket"
-                          stroke={chartColors.movieTicket}
-                          name={t("item.movieTicket")}
-                        />
-                        <Line type="monotone" dataKey="book" stroke={chartColors.book} name={t("item.book")} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </Chart>
-                </ChartContainer>
+              <div className="w-full h-[400px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData.relativeData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="tulip"
+                      stroke={chartColors.tulip}
+                      strokeWidth={3}
+                      dot={{ r: 1 }}
+                      activeDot={{ r: 5 }}
+                      name={t("site.title")}
+                    />
+                    <Line type="monotone" dataKey="coffee" stroke={chartColors.coffee} name={t("item.coffee")} />
+                    <Line
+                      type="monotone"
+                      dataKey="groceryBag"
+                      stroke={chartColors.groceryBag}
+                      name={t("item.groceryBag")}
+                    />
+                    <Line type="monotone" dataKey="lunch" stroke={chartColors.lunch} name={t("item.lunch")} />
+                    <Line
+                      type="monotone"
+                      dataKey="busTicket"
+                      stroke={chartColors.busTicket}
+                      name={t("item.busTicket")}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="movieTicket"
+                      stroke={chartColors.movieTicket}
+                      name={t("item.movieTicket")}
+                    />
+                    <Line type="monotone" dataKey="book" stroke={chartColors.book} name={t("item.book")} />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
               <div className="text-sm text-muted-foreground mt-4 text-center">{t("trends.relativeCaption")}</div>
             </TabsContent>
 
             <TabsContent value="purchasing">
-              <div className="h-[400px]">
-                <ChartContainer>
-                  <Chart>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={chartData.purchasingPowerData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Legend />
-                        <Line type="monotone" dataKey="coffee" stroke={chartColors.coffee} name={t("item.coffee")} />
-                        <Line
-                          type="monotone"
-                          dataKey="groceryBag"
-                          stroke={chartColors.groceryBag}
-                          name={t("item.groceryBag")}
-                        />
-                        <Line type="monotone" dataKey="lunch" stroke={chartColors.lunch} name={t("item.lunch")} />
-                        <Line
-                          type="monotone"
-                          dataKey="busTicket"
-                          stroke={chartColors.busTicket}
-                          name={t("item.busTicket")}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="movieTicket"
-                          stroke={chartColors.movieTicket}
-                          name={t("item.movieTicket")}
-                        />
-                        <Line type="monotone" dataKey="book" stroke={chartColors.book} name={t("item.book")} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </Chart>
-                </ChartContainer>
+              <div className="w-full h-[400px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData.purchasingPowerData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="year" />
+                    <YAxis />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend />
+                    <Line type="monotone" dataKey="coffee" stroke={chartColors.coffee} name={t("item.coffee")} />
+                    <Line
+                      type="monotone"
+                      dataKey="groceryBag"
+                      stroke={chartColors.groceryBag}
+                      name={t("item.groceryBag")}
+                    />
+                    <Line type="monotone" dataKey="lunch" stroke={chartColors.lunch} name={t("item.lunch")} />
+                    <Line
+                      type="monotone"
+                      dataKey="busTicket"
+                      stroke={chartColors.busTicket}
+                      name={t("item.busTicket")}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="movieTicket"
+                      stroke={chartColors.movieTicket}
+                      name={t("item.movieTicket")}
+                    />
+                    <Line type="monotone" dataKey="book" stroke={chartColors.book} name={t("item.book")} />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
               <div className="text-sm text-muted-foreground mt-4 text-center">{t("trends.purchasingCaption")}</div>
             </TabsContent>
@@ -262,4 +247,3 @@ export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
     </motion.div>
   )
 }
-
