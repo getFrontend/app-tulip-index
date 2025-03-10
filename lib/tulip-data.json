@@ -1,0 +1,257 @@
+{
+  "historical": [
+    {
+      "year": 2003,
+      "tulipPrice": 1.25,
+      "essentialGoods": {
+        "coffee": 2.5,
+        "groceryBag": 25.0,
+        "lunch": 7.5,
+        "busTicket": 1.5,
+        "movieTicket": 8.0,
+        "book": 14.99
+      }
+    },
+    {
+      "year": 2004,
+      "tulipPrice": 1.3,
+      "essentialGoods": {
+        "coffee": 2.55,
+        "groceryBag": 25.5,
+        "lunch": 7.75,
+        "busTicket": 1.6,
+        "movieTicket": 8.25,
+        "book": 15.49
+      }
+    },
+    {
+      "year": 2005,
+      "tulipPrice": 1.35,
+      "essentialGoods": {
+        "coffee": 2.65,
+        "groceryBag": 26.0,
+        "lunch": 8.0,
+        "busTicket": 1.7,
+        "movieTicket": 8.5,
+        "book": 15.99
+      }
+    },
+    {
+      "year": 2006,
+      "tulipPrice": 1.45,
+      "essentialGoods": {
+        "coffee": 2.75,
+        "groceryBag": 26.5,
+        "lunch": 8.25,
+        "busTicket": 1.8,
+        "movieTicket": 8.75,
+        "book": 16.49
+      }
+    },
+    {
+      "year": 2007,
+      "tulipPrice": 1.55,
+      "essentialGoods": {
+        "coffee": 2.85,
+        "groceryBag": 27.0,
+        "lunch": 8.5,
+        "busTicket": 1.9,
+        "movieTicket": 9.0,
+        "book": 16.99
+      }
+    },
+    {
+      "year": 2008,
+      "tulipPrice": 1.65,
+      "essentialGoods": {
+        "coffee": 2.95,
+        "groceryBag": 28.0,
+        "lunch": 8.75,
+        "busTicket": 2.0,
+        "movieTicket": 9.5,
+        "book": 17.49
+      }
+    },
+    {
+      "year": 2009,
+      "tulipPrice": 1.75,
+      "essentialGoods": {
+        "coffee": 3.1,
+        "groceryBag": 29.0,
+        "lunch": 9.0,
+        "busTicket": 2.1,
+        "movieTicket": 10.0,
+        "book": 17.99
+      }
+    },
+    {
+      "year": 2010,
+      "tulipPrice": 1.85,
+      "essentialGoods": {
+        "coffee": 3.25,
+        "groceryBag": 30.0,
+        "lunch": 9.25,
+        "busTicket": 2.25,
+        "movieTicket": 10.5,
+        "book": 18.49
+      }
+    },
+    {
+      "year": 2011,
+      "tulipPrice": 2.0,
+      "essentialGoods": {
+        "coffee": 3.5,
+        "groceryBag": 31.0,
+        "lunch": 9.5,
+        "busTicket": 2.35,
+        "movieTicket": 11.0,
+        "book": 18.99
+      }
+    },
+    {
+      "year": 2012,
+      "tulipPrice": 2.15,
+      "essentialGoods": {
+        "coffee": 3.75,
+        "groceryBag": 32.0,
+        "lunch": 9.75,
+        "busTicket": 2.5,
+        "movieTicket": 11.5,
+        "book": 19.49
+      }
+    },
+    {
+      "year": 2013,
+      "tulipPrice": 2.35,
+      "essentialGoods": {
+        "coffee": 3.95,
+        "groceryBag": 33.0,
+        "lunch": 10.0,
+        "busTicket": 2.65,
+        "movieTicket": 12.0,
+        "book": 19.99
+      }
+    },
+    {
+      "year": 2014,
+      "tulipPrice": 2.5,
+      "essentialGoods": {
+        "coffee": 4.15,
+        "groceryBag": 34.0,
+        "lunch": 10.5,
+        "busTicket": 2.75,
+        "movieTicket": 12.5,
+        "book": 20.49
+      }
+    },
+    {
+      "year": 2015,
+      "tulipPrice": 2.75,
+      "essentialGoods": {
+        "coffee": 4.35,
+        "groceryBag": 35.0,
+        "lunch": 11.0,
+        "busTicket": 2.85,
+        "movieTicket": 13.0,
+        "book": 20.99
+      }
+    },
+    {
+      "year": 2016,
+      "tulipPrice": 3.0,
+      "essentialGoods": {
+        "coffee": 4.5,
+        "groceryBag": 36.0,
+        "lunch": 11.5,
+        "busTicket": 3.0,
+        "movieTicket": 13.5,
+        "book": 21.49
+      }
+    },
+    {
+      "year": 2017,
+      "tulipPrice": 3.25,
+      "essentialGoods": {
+        "coffee": 4.65,
+        "groceryBag": 37.0,
+        "lunch": 12.0,
+        "busTicket": 3.15,
+        "movieTicket": 14.0,
+        "book": 21.99
+      }
+    },
+    {
+      "year": 2018,
+      "tulipPrice": 3.5,
+      "essentialGoods": {
+        "coffee": 4.85,
+        "groceryBag": 38.0,
+        "lunch": 12.5,
+        "busTicket": 3.25,
+        "movieTicket": 14.5,
+        "book": 22.49
+      }
+    },
+    {
+      "year": 2019,
+      "tulipPrice": 3.75,
+      "essentialGoods": {
+        "coffee": 5.0,
+        "groceryBag": 39.0,
+        "lunch": 13.0,
+        "busTicket": 3.35,
+        "movieTicket": 15.0,
+        "book": 22.99
+      }
+    },
+    {
+      "year": 2020,
+      "tulipPrice": 4.0,
+      "essentialGoods": {
+        "coffee": 5.25,
+        "groceryBag": 42.0,
+        "lunch": 13.5,
+        "busTicket": 3.5,
+        "movieTicket": 15.5,
+        "book": 23.49
+      }
+    },
+    {
+      "year": 2021,
+      "tulipPrice": 4.5,
+      "essentialGoods": {
+        "coffee": 5.5,
+        "groceryBag": 45.0,
+        "lunch": 14.0,
+        "busTicket": 3.65,
+        "movieTicket": 16.0,
+        "book": 23.99
+      }
+    },
+    {
+      "year": 2022,
+      "tulipPrice": 5.0,
+      "essentialGoods": {
+        "coffee": 5.75,
+        "groceryBag": 48.0,
+        "lunch": 14.5,
+        "busTicket": 3.75,
+        "movieTicket": 16.5,
+        "book": 24.49
+      }
+    },
+    {
+      "year": 2023,
+      "tulipPrice": 5.5,
+      "essentialGoods": {
+        "coffee": 6.0,
+        "groceryBag": 52.0,
+        "lunch": 15.0,
+        "busTicket": 3.85,
+        "movieTicket": 17.0,
+        "book": 24.99
+      }
+    }
+  ]
+}
+
