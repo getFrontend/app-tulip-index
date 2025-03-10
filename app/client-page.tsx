@@ -6,13 +6,34 @@ import HistoricalTrends from "@/components/historical-trends"
 import SiteHeader from "@/components/site-header"
 import SiteFooter from "@/components/site-footer"
 import type { LatestPriceData, HistoricalData } from "@/lib/types"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "@/lib/i18n/context"
 
 interface ClientPageProps {
   initialData: {
     latest: LatestPriceData
     historical: HistoricalData[]
   }
+}
+
+// Small client components for translated text
+function ClientTitle() {
+  const { t } = useTranslation()
+  return <>{t("home.title")}</>
+}
+
+function ClientSubtitle() {
+  const { t } = useTranslation()
+  return <>{t("home.subtitle")}</>
+}
+
+function ClientComparisonTitle() {
+  const { t } = useTranslation()
+  return <>{t("comparison.title")}</>
+}
+
+function ClientTrendsTitle() {
+  const { t } = useTranslation()
+  return <>{t("trends.title")}</>
 }
 
 // Remove async and use props instead
@@ -51,25 +72,4 @@ export default function ClientPage({ initialData }: ClientPageProps) {
       <SiteFooter />
     </>
   )
-}
-
-// Small client components for translated text
-function ClientTitle() {
-  const { t } = useTranslation()
-  return <>{t("home.title")}</>
-}
-
-function ClientSubtitle() {
-  const { t } = useTranslation()
-  return <>{t("home.subtitle")}</>
-}
-
-function ClientComparisonTitle() {
-  const { t } = useTranslation()
-  return <>{t("comparison.title")}</>
-}
-
-function ClientTrendsTitle() {
-  const { t } = useTranslation()
-  return <>{t("trends.title")}</>
 }
