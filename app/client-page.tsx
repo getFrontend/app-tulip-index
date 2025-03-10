@@ -5,19 +5,24 @@ import PriceComparison from "@/components/price-comparison"
 import HistoricalTrends from "@/components/historical-trends"
 import SiteHeader from "@/components/site-header"
 import SiteFooter from "@/components/site-footer"
-import { getTulipData } from "@/lib/data"
+import type { LatestPriceData, HistoricalData } from "@/lib/types"
 import { useTranslation } from "react-i18next"
 
-export default async function ClientPage() {
-  const data = await getTulipData()
+interface ClientPageProps {
+  initialData: {
+    latest: LatestPriceData
+    historical: HistoricalData[]
+  }
+}
 
+// Remove async and use props instead
+export default function ClientPage({ initialData }: ClientPageProps) {
   return (
     <>
       <SiteHeader />
       <main className="container mx-auto px-4 py-8">
         <section className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-violet-500 text-transparent bg-clip-text">
-            {/* Title will be translated in client component */}
             <ClientTitle />
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -26,21 +31,21 @@ export default async function ClientPage() {
         </section>
 
         <section className="mb-16">
-          <PriceCalculator data={data.latest} />
+          <PriceCalculator data={initialData.latest} />
         </section>
 
         <section className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
             <ClientComparisonTitle />
           </h2>
-          <PriceComparison data={data.latest} />
+          <PriceComparison data={initialData.latest} />
         </section>
 
         <section className="mb-16">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
             <ClientTrendsTitle />
           </h2>
-          <HistoricalTrends data={data.historical} />
+          <HistoricalTrends data={initialData.historical} />
         </section>
       </main>
       <SiteFooter />
@@ -68,4 +73,3 @@ function ClientTrendsTitle() {
   const { t } = useTranslation()
   return <>{t("trends.title")}</>
 }
-
