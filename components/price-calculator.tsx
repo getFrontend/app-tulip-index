@@ -16,10 +16,10 @@ interface PriceCalculatorProps {
 }
 
 export default function PriceCalculator({ data }: PriceCalculatorProps) {
-  const { t, formatPrice, convertPrice } = useTranslation()
+  const { t, formatPrice } = useTranslation()
   const [tulipCount, setTulipCount] = useState(10)
-  const totalPrice = tulipCount * convertPrice(data.tulipPrice)
-
+  // Remove the unused totalPrice variable
+  
   const handleSliderChange = (value: number[]) => {
     setTulipCount(value[0])
   }
