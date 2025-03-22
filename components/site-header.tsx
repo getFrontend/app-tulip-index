@@ -3,6 +3,8 @@
 import { useTranslation } from "@/lib/i18n/context"
 import LanguageSwitcher from "./language-switcher"
 import CurrencyDisplay from "./currency-display"
+import Image from "next/image"
+import { logoImg } from "@/constants"
 
 export default function SiteHeader() {
   const { t } = useTranslation()
@@ -11,6 +13,7 @@ export default function SiteHeader() {
     <header className="border-b">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
+          <Image src={logoImg} alt="Logo Tulip" width={32} height={32} />
           <span className="text-xl font-bold bg-gradient-to-r from-pink-500 to-violet-500 text-transparent bg-clip-text">
             {t("site.title")}
           </span>
