@@ -110,7 +110,23 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
                   </div>
                   <div className="text-2xl font-bold mb-1">{quantity}</div>
                   <div className="text-sm text-muted-foreground">
-                    {quantity !== 1 ? `${itemName}${item.name === "coffee" ? "" : "s"}` : itemName}
+                    {(() => {
+                      // Check if the translation keys exist in the current language
+                      const pluralKey = `item.${item.name}.plural`;
+                      const singularKey = `item.${item.name}.singular`;
+                      
+                      // Use the new keys if they're properly translated, otherwise fall back to the old approach
+                      if (t(pluralKey) !== pluralKey && t(singularKey) !== singularKey) {
+                        return quantity !== 1 
+                          ? t(pluralKey) 
+                          : t(singularKey);
+                      } else {
+                        // Fallback to original implementation
+                        return language === "en" 
+                          ? (quantity !== 1 ? `${itemName}${item.name === "coffee" ? "" : "s"}` : itemName)
+                          : itemName;
+                      }
+                    })()}
                   </div>
                 </motion.div>
               )
