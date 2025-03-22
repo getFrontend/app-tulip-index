@@ -14,33 +14,31 @@ interface HistoricalTrendsProps {
 
 // Replace any with proper types
 interface ChartData {
-  name: number;
-  tulip: number;
-  coffee: number;
-  groceryBag: number;
-  lunch: number;
-  busTicket: number;
-  movieTicket: number;
-  book: number;
+  year: number;  // Changed from 'name' to 'year' to match the data structure
+  tulip?: number;
+  coffee?: number;
+  groceryBag?: number;
+  lunch?: number;
+  busTicket?: number;
+  movieTicket?: number;
+  book?: number;
+}
+
+// Define proper interface for tooltip props
+interface TooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    name: string;
+    value: number;
+    color: string;
+  }>;
+  label?: string;
 }
 
 export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
-  const { t, formatPrice, convertPrice, language } = useTranslation()
+  const { t, convertPrice, language } = useTranslation()
   const [activeTab, setActiveTab] = useState("absolute")
-
-  // Transform data for charts with proper typing
-  const processedData: ChartData[] = data.map((year) => ({
-    name: year.year,
-    tulip: convertPrice(year.tulipPrice),
-    coffee: convertPrice(year.essentialGoods.coffee),
-    groceryBag: convertPrice(year.essentialGoods.groceryBag),
-    lunch: convertPrice(year.essentialGoods.lunch),
-    busTicket: convertPrice(year.essentialGoods.busTicket),
-    movieTicket: convertPrice(year.essentialGoods.movieTicket),
-    book: convertPrice(year.essentialGoods.book),
-  }))
-
-  // Use a different name for the state variable to avoid conflict
+  
   const [chartData, setChartData] = useState({
     absoluteData: [] as ChartData[],
     relativeData: [] as ChartData[],
@@ -111,12 +109,12 @@ export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
   }
 
   // Кастомный компонент для тултипа с поддержкой валюты
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-background border rounded-md p-2 shadow-md">
           <p className="font-medium">{`Year: ${label}`}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index) => (
             <p key={`item-${index}`} style={{ color: entry.color }}>
               {`${entry.name}: ${activeTab === "absolute" ? (language === "en" ? "$" : "₴") : ""}${entry.value.toFixed(2)}${activeTab !== "absolute" ? "%" : ""}`}
             </p>

@@ -12,18 +12,24 @@ interface PriceComparisonProps {
   data: LatestPriceData
 }
 
+interface ItemData {
+  name: string;
+  price: number;
+  icon: React.ElementType;
+  color: string;
+}
+
 export default function PriceComparison({ data }: PriceComparisonProps) {
-  // Destructure only what you use
   const { t, formatPrice, convertPrice, language } = useTranslation()
   const [tulipCount, setTulipCount] = useState(10)
   const [totalPrice, setTotalPrice] = useState(tulipCount * convertPrice(data.tulipPrice))
 
-  // Обновляем общую цену при изменении языка (валюты)
+  // Update the total price when language (currency) changes
   useEffect(() => {
     setTotalPrice(tulipCount * convertPrice(data.tulipPrice))
   }, [language, tulipCount, data.tulipPrice, convertPrice])
 
-  const items = [
+  const items: ItemData[] = [
     {
       name: "coffee",
       price: data.essentialGoods.coffee,
@@ -93,7 +99,7 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {items.map((item, index) => {
-              // Конвертируем цены в текущую валюту
+              // Convert prices to current currency
               const itemPrice = convertPrice(item.price)
               const quantity = Math.floor(totalPrice / itemPrice)
               const itemName = t(`item.${item.name}`)

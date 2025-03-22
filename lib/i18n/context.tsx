@@ -3,8 +3,8 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { translations, type Language, type TranslationKey } from "./translations"
 
-// Коэффициент конвертации USD в UAH
-const USD_TO_UAH_RATE = 11 // Примерный коэффициент, чтобы тюльпан стоил ~60 грн
+// USD to UAH conversion rate
+const USD_TO_UAH_RATE = 11 // Approximate rate to make a tulip cost ~60 UAH
 
 type LanguageContextType = {
   language: Language
@@ -48,7 +48,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return translation
   }
 
-  // Функция для конвертации цены из USD в текущую валюту
+  // Function to convert price from USD to current currency
   const convertPrice = (priceUSD: number): number => {
     if (language === "uk") {
       return priceUSD * USD_TO_UAH_RATE
@@ -56,7 +56,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return priceUSD
   }
 
-  // Функция для форматирования цены с символом валюты
+  // Function to format price with currency symbol
   const formatPrice = (priceUSD: number): string => {
     const price = convertPrice(priceUSD)
     if (language === "uk") {
@@ -65,7 +65,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return `$${price.toFixed(2)}`
   }
 
-  // Символ валюты для текущего языка
+  // Currency symbol for current language
   const currencySymbol = language === "uk" ? "₴" : "$"
 
   return (
