@@ -40,7 +40,7 @@ export default function PriceCalculator({ data }: PriceCalculatorProps) {
       <CardContent>
         <div className="grid gap-6">
           <div className="flex flex-col md:flex-row gap-4 items-center">
-            <div className="w-full md:w-2/3">
+            <div className="w-full">
               <Slider value={[tulipCount]} min={1} max={100} step={1} onValueChange={handleSliderChange} />
             </div>
             <div className="flex items-center gap-2">
