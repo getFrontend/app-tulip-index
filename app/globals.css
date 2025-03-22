@@ -123,4 +123,16 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  button {
+    cursor: pointer;
+  }
+
+  span[role="slider"] {
+    cursor: grab;
+  }
+
+  span[role="slider"]:active {
+    cursor: grabbing;
+  }
 }
