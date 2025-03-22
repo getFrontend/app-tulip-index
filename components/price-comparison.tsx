@@ -102,9 +102,9 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
               // Convert prices to current currency
               const itemPrice = convertPrice(item.price)
               const quantity = Math.floor(totalPrice / itemPrice)
-              // Fix the translation key format
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              const itemName = t("item." + item.name)
+              
+              // Use as() to cast the translation result to string
+              const itemName = t(`item.${item.name}` as keyof typeof t)
 
               return (
                 <motion.div
@@ -125,11 +125,10 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
                       const singularKey = "item." + item.name + ".singular";
                       
                       // Use the new keys if they're properly translated, otherwise fall back to the old approach
-                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      if (t(pluralKey) !== pluralKey && t(singularKey) !== singularKey) {
+                      if (t(pluralKey as keyof typeof t) !== pluralKey && t(singularKey as keyof typeof t) !== singularKey) {
                         return quantity !== 1 
-                          ? t(pluralKey) 
-                          : t(singularKey);
+                          ? t(pluralKey as keyof typeof t)
+                          : t(singularKey as keyof typeof t);
                       } else {
                         // We need language here, so it's not unused
                         return language === "en" 
