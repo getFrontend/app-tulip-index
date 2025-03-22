@@ -13,6 +13,7 @@ interface PriceComparisonProps {
 }
 
 export default function PriceComparison({ data }: PriceComparisonProps) {
+  // Destructure only what you use
   const { t, formatPrice, convertPrice, language } = useTranslation()
   const [tulipCount, setTulipCount] = useState(10)
   const [totalPrice, setTotalPrice] = useState(tulipCount * convertPrice(data.tulipPrice))
@@ -121,7 +122,7 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
                           ? t(pluralKey) 
                           : t(singularKey);
                       } else {
-                        // Fallback to original implementation
+                        // We need language here, so it's not unused
                         return language === "en" 
                           ? (quantity !== 1 ? `${itemName}${item.name === "coffee" ? "" : "s"}` : itemName)
                           : itemName;

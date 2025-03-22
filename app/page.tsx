@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+
+// If there are any unused imports, remove them
 import ClientPage from "./client-page"
 import { getTulipData } from "@/lib/data"
 
@@ -8,9 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  // Move data fetching to the Server Component
   const data = await getTulipData()
-
-  // Pass data as props to the Client Component
+  
   return <ClientPage initialData={data} />
 }

@@ -12,13 +12,39 @@ interface HistoricalTrendsProps {
   data: HistoricalData[]
 }
 
+// Replace any with proper types
+interface ChartData {
+  name: number;
+  tulip: number;
+  coffee: number;
+  groceryBag: number;
+  lunch: number;
+  busTicket: number;
+  movieTicket: number;
+  book: number;
+}
+
 export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
-  const { t, convertPrice, language, currencySymbol } = useTranslation()
+  const { t, formatPrice, convertPrice, language } = useTranslation()
   const [activeTab, setActiveTab] = useState("absolute")
+
+  // Transform data for charts with proper typing
+  const processedData: ChartData[] = data.map((year) => ({
+    name: year.year,
+    tulip: convertPrice(year.tulipPrice),
+    coffee: convertPrice(year.essentialGoods.coffee),
+    groceryBag: convertPrice(year.essentialGoods.groceryBag),
+    lunch: convertPrice(year.essentialGoods.lunch),
+    busTicket: convertPrice(year.essentialGoods.busTicket),
+    movieTicket: convertPrice(year.essentialGoods.movieTicket),
+    book: convertPrice(year.essentialGoods.book),
+  }))
+
+  // Use a different name for the state variable to avoid conflict
   const [chartData, setChartData] = useState({
-    absoluteData: [] as any[],
-    relativeData: [] as any[],
-    purchasingPowerData: [] as any[],
+    absoluteData: [] as ChartData[],
+    relativeData: [] as ChartData[],
+    purchasingPowerData: [] as ChartData[],
   })
 
   // Обновляем данные графиков при изменении языка (валюты)
@@ -92,7 +118,7 @@ export default function HistoricalTrends({ data }: HistoricalTrendsProps) {
           <p className="font-medium">{`Year: ${label}`}</p>
           {payload.map((entry: any, index: number) => (
             <p key={`item-${index}`} style={{ color: entry.color }}>
-              {`${entry.name}: ${activeTab === "absolute" ? currencySymbol : ""}${entry.value.toFixed(2)}${activeTab !== "absolute" ? "%" : ""}`}
+              {`${entry.name}: ${activeTab === "absolute" ? (language === "en" ? "$" : "₴") : ""}${entry.value.toFixed(2)}${activeTab !== "absolute" ? "%" : ""}`}
             </p>
           ))}
         </div>

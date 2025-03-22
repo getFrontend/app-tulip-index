@@ -35,15 +35,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }
 
   // Translation function with parameter support
+  // Replace any with proper error type
   const t = (key: TranslationKey, params?: Record<string, string | number>): string => {
     let translation = translations[language][key] || key
-
+  
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
         translation = translation.replace(`{${paramKey}}`, String(paramValue))
       })
     }
-
+  
     return translation
   }
 
