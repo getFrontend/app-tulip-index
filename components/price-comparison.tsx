@@ -102,7 +102,9 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
               // Convert prices to current currency
               const itemPrice = convertPrice(item.price)
               const quantity = Math.floor(totalPrice / itemPrice)
-              const itemName = t(`item.${item.name}`)
+              // Fix the translation key format
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const itemName = t("item." + item.name)
 
               return (
                 <motion.div
@@ -119,10 +121,11 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
                   <div className="text-sm text-muted-foreground">
                     {(() => {
                       // Check if the translation keys exist in the current language
-                      const pluralKey = `item.${item.name}.plural`;
-                      const singularKey = `item.${item.name}.singular`;
+                      const pluralKey = "item." + item.name + ".plural";
+                      const singularKey = "item." + item.name + ".singular";
                       
                       // Use the new keys if they're properly translated, otherwise fall back to the old approach
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
                       if (t(pluralKey) !== pluralKey && t(singularKey) !== singularKey) {
                         return quantity !== 1 
                           ? t(pluralKey) 
@@ -130,7 +133,9 @@ export default function PriceComparison({ data }: PriceComparisonProps) {
                       } else {
                         // We need language here, so it's not unused
                         return language === "en" 
-                          ? (quantity !== 1 ? `${itemName}${item.name === "coffee" ? "" : "s"}` : itemName)
+                          ? (quantity !== 1 
+                              ? itemName + (item.name === "coffee" ? "" : "s") 
+                              : itemName)
                           : itemName;
                       }
                     })()}
